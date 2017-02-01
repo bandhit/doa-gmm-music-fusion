@@ -5,14 +5,14 @@
 #include <fstream>
 
 TEST(TEST_ORG_PORT_ADIO, INIT_1) {
-    type::logic is_not_err = cnst::no;
+    aud_t::logic is_not_err = aud_t::no;
     PaError err_1;
     PaError err_2;
     err_1 = Pa_Initialize();
     if (err_1 == paNoError) {
         err_2 = Pa_Terminate();
         if (err_2 == paNoError) {
-            is_not_err = cnst::yes;
+            is_not_err = aud_t::yes;
         }
         else {
             //std::cout << "Terminate: " << Pa_GetErrorText(err_2) << std::endl;
@@ -21,11 +21,11 @@ TEST(TEST_ORG_PORT_ADIO, INIT_1) {
     else {
         //std::cout << "Initialize: " << Pa_GetErrorText(err_1) << std::endl;
     }
-    EXPECT_TRUE(is_not_err == cnst::yes);
+    EXPECT_TRUE(is_not_err == aud_t::yes);
 }
 
 TEST(TEST_ORG_PORT_ADIO, INIT_2) {
-    type::logic is_not_err = cnst::no;
+    aud_t::logic is_not_err = aud_t::no;
     PaError err_1;
     PaError err_2;
     try {
@@ -42,16 +42,16 @@ TEST(TEST_ORG_PORT_ADIO, INIT_2) {
         if (err_2 != paNoError) {
             throw "Termination fail";
         }
-        is_not_err = cnst::yes;
+        is_not_err = aud_t::yes;
     }
     catch (std::exception& e) {
         //std::cout << "Exception: " << e.what() << std::endl;
     }
-    EXPECT_TRUE(is_not_err);
+    EXPECT_TRUE(is_not_err == aud_t::yes);
 }
 
 TEST(TEST_ORG_PORT_ADIO, INIT_3) {
-    type::logic is_not_err = cnst::no;
+    aud_t::logic is_not_err = aud_t::no;
     PaError err_1;
     PaError err_2;
     try {
@@ -61,7 +61,7 @@ TEST(TEST_ORG_PORT_ADIO, INIT_3) {
         }
         PaDeviceIndex n_dev = Pa_GetDeviceCount();
         for (PaDeviceIndex idx_dev = 0; idx_dev < n_dev; idx_dev++) {
-            std::cout << Pa_GetDeviceInfo(idx_dev)->name << std::endl;
+            //std::cout << Pa_GetDeviceInfo(idx_dev)->name << std::endl;
         }
         //std::cout << Pa_GetDeviceInfo(Pa_GetDefaultInputDevice())->name << std::endl;
     }
@@ -73,12 +73,12 @@ TEST(TEST_ORG_PORT_ADIO, INIT_3) {
         if (err_2 != paNoError) {
             throw "Termination fail";
         }
-        is_not_err = cnst::yes;
+        is_not_err = aud_t::yes;
     }
     catch (std::exception& e) {
         //std::cout << "Exception: " << e.what() << std::endl;
     }
-    EXPECT_TRUE(is_not_err);
+    EXPECT_TRUE(is_not_err == aud_t::yes);
 }
 
 typedef short int type_sam;
@@ -116,7 +116,7 @@ int recd_call_back (const void* in_buf,
         for(unsigned long idx_frm = 0; idx_frm < n_cpy_frm; idx_frm++) {
             *w_ptr_ch1++ = *r_ptr++;
             *w_ptr_ch2++ = *r_ptr++;
-            // *r_ptr++; // add this line, depend on number of channel
+            // *w_ptr_chx++ = *r_ptr++; // add this line, depend on number of channel
         }
     }
     else {
@@ -130,7 +130,7 @@ int recd_call_back (const void* in_buf,
 }
 
 TEST(TEST_ORG_PORT_ADIO, HELLO_PA) {
-    type::logic is_not_err = cnst::no;
+    aud_t::logic is_not_err = aud_t::no;
     PaError err;
     try {
         err = Pa_Initialize();
@@ -184,12 +184,14 @@ TEST(TEST_ORG_PORT_ADIO, HELLO_PA) {
         if (err != paNoError) {
             throw "Close stream error";
         }
+        /*
         std::ofstream my_file;
         my_file.open("ex_1.csv");
         for(unsigned long idx_frm = 0; idx_frm < max_frm; idx_frm++) {
             my_file << usr_dat->recd_ch1[idx_frm] << "," << usr_dat->recd_ch2[idx_frm] << std::endl;
         }
         my_file.close();
+        */
     }
     catch (std::exception& e) {
         //std::cout << "Exception: " << e.what() << std::endl;
@@ -199,10 +201,10 @@ TEST(TEST_ORG_PORT_ADIO, HELLO_PA) {
         if (err != paNoError) {
             throw "Termination Fail";
         }
-        is_not_err = cnst::yes;
+        is_not_err = aud_t::yes;
     }
     catch (std::exception& e) {
         //std::cout << "Exception: " << e.what() << std::endl;
     }
-    EXPECT_TRUE(is_not_err);
+    EXPECT_TRUE(is_not_err == aud_t::yes);
 }
