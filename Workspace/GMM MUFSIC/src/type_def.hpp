@@ -25,8 +25,8 @@ namespace aud_t {
     typedef long          sint;
     typedef double        fpt;
     typedef bool          logic;
-    const mat_t::logic    no  = false;
-    const mat_t::logic    yes = true;
+    const   mat_t::logic  no  = false;
+    const   mat_t::logic  yes = true;
 }
 
 #endif

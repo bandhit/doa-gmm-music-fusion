@@ -92,11 +92,11 @@ typedef struct {
 paUserData;
 
 int recd_call_back (const void* in_buf,
-                                       void* out_buf,
-                                       unsigned long frm_per_buf,
-                                       const PaStreamCallbackTimeInfo* tim_inf,
-                                       PaStreamCallbackFlags flag,
-                                       void* usr_dat) {
+                    void* out_buf,
+                    unsigned long frm_per_buf,
+                    const PaStreamCallbackTimeInfo* tim_inf,
+                    PaStreamCallbackFlags flag,
+                    void* usr_dat) {
     PaStreamCallbackResult resu;
     paUserData*     dat       = (paUserData*) usr_dat;
     const type_sam* r_ptr     = (const type_sam*) in_buf;
