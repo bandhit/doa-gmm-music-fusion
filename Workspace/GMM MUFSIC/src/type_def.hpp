@@ -35,9 +35,9 @@ namespace type {
 
 
 namespace cnst {
-    const type::bit   b_0 = 0b0;
-    const type::bit   b_1 = 0b1;
-    const type::val   eps = 1e-8;
+    const type::bit b_0 = 0b0;
+    const type::bit b_1 = 0b1;
+    const type::val eps = 1e-8;
 }
 
 #endif

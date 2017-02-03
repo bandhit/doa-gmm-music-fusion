@@ -2,13 +2,22 @@
 #include <type_traits>
 #include <ctime>
 
+
+bool open_port (void) {
+    return (Pa_Initialize() == paNoError);
+}
+
+bool clos_port (void) {
+    return (Pa_Terminate() == paNoError);
+}
+
 template <typename t>
 port_adio<t>::~port_adio(void) {
     del_buf_recd();
 }
 
 template <typename t>
-port_adio<t>::port_adio (const type::uint new_id,
+port_adio<t>::port_adio (const type::sint new_id,
                          const type::uint new_n_ch,
                          const type::uint new_frm_per_buf,
                          const type::uint new_tim_s,
@@ -32,10 +41,10 @@ port_adio<t>::port_adio (const type::uint new_n_ch,
                          const type::uint new_frm_per_buf,
                          const type::uint new_tim_s,
                          const type::uint new_sam_frq) : port_adio(Pa_GetDefaultInputDevice(),
-                                                         new_n_ch,
-                                                         new_frm_per_buf,
-                                                         new_tim_s,
-                                                         new_sam_frq) {
+                                                                   new_n_ch,
+                                                                   new_frm_per_buf,
+                                                                   new_tim_s,
+                                                                   new_sam_frq) {
 }
 
 template <typename t>
@@ -94,12 +103,8 @@ template <typename t>
 void port_adio<t>::save (void) {
     time_t now = time(0);
     std::string str(ctime(&now));
+    str.erase(str.end() - 1, str.end());
     buf_recd.save(str, arma::csv_ascii);
-}
-
-template <typename t>
-void port_adio<t>::open_port (void) {
-    err = Pa_Initialize();
 }
 
 template <typename t>
@@ -122,7 +127,7 @@ int recd_call_back (const void*                     in_buf,
                     PaStreamCallbackFlags           flag,
                     void*                           usr_dat) {
     PaStreamCallbackResult resu;
-    port_adio<t>* obj = (port_adio<t>*) usr_dat;
+    port_adio<t>* obj      = (port_adio<t>*) usr_dat;
     const t**     t_in_buf = (const t**) in_buf;
     type::uint    gap_frm  = obj->max_frm - obj->idx_frm;
     type::uint    n_cpy_frm;
@@ -137,16 +142,14 @@ int recd_call_back (const void*                     in_buf,
     }
     n_cpy_frm_elem = (std::size_t) n_cpy_frm * obj->elem_size;
     if(in_buf != NULL) {
-        //buf_recd.rows(idx_frm, idx_frm + n_cpy_frm)->zeros();
-        obj->buf_recd.rows(obj->idx_frm, obj->idx_frm + n_cpy_frm).zeros();
-    }
-    else {
         for (type::uint idx_ch = 0; idx_ch < obj->in_stem_para->channelCount; idx_ch++) {
-            //buf_recd.Col(idx_ch)->row(idx_frm)->memptr()
             std::memcpy(obj->buf_recd.colptr(idx_ch) + obj->idx_frm,
                         &t_in_buf[idx_ch][0],
                         n_cpy_frm_elem);
         }
+    }
+    else {
+        obj->buf_recd.rows(obj->idx_frm, obj->idx_frm + n_cpy_frm - 1).zeros();
     }
     obj->idx_frm += n_cpy_frm;
     return resu;
@@ -168,17 +171,18 @@ void port_adio<t>::clos_stem (void) {
 }
 
 template <typename t>
-void port_adio<t>::clos_port (void) {
-    err = Pa_Terminate();
-}
-
-template <typename t>
 bool port_adio<t>::is_err (void) {
     return (err != paNoError);
 }
 
+template <typename t>
+std::string port_adio<t>::get_err (void) {
+    std::string str(Pa_GetErrorText(err));
+    return str;
+}
+
 template class port_adio<type::val>;
 template class port_adio<type::sint32>;
-//template class port_adio<type::sint16>;
-//template class port_adio<type::sint8>;
+template class port_adio<type::sint16>;
+//template class port_adio<type::sint8>; // Armadillo C++ unsupported type
 template class port_adio<type::uint8>;

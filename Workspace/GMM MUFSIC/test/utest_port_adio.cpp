@@ -212,24 +212,33 @@ TEST(TEST_ORG_PORT_ADIO, HELLO_PA) {
 
 TEST(TEST_PORT_ADIO, HELLO_PA) {
     bool is_not_err = true;
-    port_adio<type::uint8>* obj = new port_adio<type::uint8>(2, 512, 3, 44100);
     try {
-        obj->open_port();
+        if (!open_port())
+            throw "Initialization fail";
+        port_adio<type::sint32>* obj = new port_adio<type::sint32>(0, 2, 512, 6, 44100);
         obj->open_stem();
+        if (obj->is_err())
+            throw obj->get_err();
         obj->strt_stem();
+        if (obj->is_err())
+            throw obj->get_err();
         while(obj->is_stem_acti());
         obj->clos_stem();
+        if (obj->is_err())
+            throw obj->get_err();
+        obj->save();
     }
     catch (std::exception& e) {
         is_not_err = false;
-        std::cout << "Exception: " << e.what() << std::endl;
+        //std::cout << "Exception: " << e.what() << std::endl;
     }
     try {
-        obj->clos_port();
+        if (!clos_port())
+            throw "Termination Fail";
     }
     catch (std::exception& e) {
         is_not_err = false;
-        std::cout << "Exception: " << e.what() << std::endl;
+        //std::cout << "Exception: " << e.what() << std::endl;
     }
     EXPECT_TRUE(is_not_err == true);
 }
