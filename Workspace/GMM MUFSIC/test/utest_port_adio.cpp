@@ -5,14 +5,14 @@
 #include <fstream>
 
 TEST(TEST_ORG_PORT_ADIO, INIT_1) {
-    aud_t::logic is_not_err = aud_t::no;
+    bool is_not_err = false;
     PaError err_1;
     PaError err_2;
     err_1 = Pa_Initialize();
     if (err_1 == paNoError) {
         err_2 = Pa_Terminate();
         if (err_2 == paNoError) {
-            is_not_err = aud_t::yes;
+            is_not_err = true;
         }
         else {
             //std::cout << "Terminate: " << Pa_GetErrorText(err_2) << std::endl;
@@ -21,11 +21,11 @@ TEST(TEST_ORG_PORT_ADIO, INIT_1) {
     else {
         //std::cout << "Initialize: " << Pa_GetErrorText(err_1) << std::endl;
     }
-    EXPECT_TRUE(is_not_err == aud_t::yes);
+    EXPECT_TRUE(is_not_err == true);
 }
 
 TEST(TEST_ORG_PORT_ADIO, INIT_2) {
-    aud_t::logic is_not_err = aud_t::no;
+    bool is_not_err = true;
     PaError err_1;
     PaError err_2;
     try {
@@ -42,16 +42,16 @@ TEST(TEST_ORG_PORT_ADIO, INIT_2) {
         if (err_2 != paNoError) {
             throw "Termination fail";
         }
-        is_not_err = aud_t::yes;
     }
     catch (std::exception& e) {
+        is_not_err = false;
         //std::cout << "Exception: " << e.what() << std::endl;
     }
-    EXPECT_TRUE(is_not_err == aud_t::yes);
+    EXPECT_TRUE(is_not_err == true);
 }
 
 TEST(TEST_ORG_PORT_ADIO, INIT_3) {
-    aud_t::logic is_not_err = aud_t::no;
+    bool is_not_err = true;
     PaError err_1;
     PaError err_2;
     try {
@@ -73,12 +73,12 @@ TEST(TEST_ORG_PORT_ADIO, INIT_3) {
         if (err_2 != paNoError) {
             throw "Termination fail";
         }
-        is_not_err = aud_t::yes;
     }
     catch (std::exception& e) {
+        is_not_err = false;
         //std::cout << "Exception: " << e.what() << std::endl;
     }
-    EXPECT_TRUE(is_not_err == aud_t::yes);
+    EXPECT_TRUE(is_not_err == true);
 }
 
 typedef short int type_sam;
@@ -91,12 +91,12 @@ typedef struct {
 }
 paUserData;
 
-int recd_call_back (const void* in_buf,
-                    void* out_buf,
-                    unsigned long frm_per_buf,
-                    const PaStreamCallbackTimeInfo* tim_inf,
-                    PaStreamCallbackFlags flag,
-                    void* usr_dat) {
+int call_back (const void* in_buf,
+               void* out_buf,
+               unsigned long frm_per_buf,
+               const PaStreamCallbackTimeInfo* tim_inf,
+               PaStreamCallbackFlags flag,
+               void* usr_dat) {
     PaStreamCallbackResult resu;
     paUserData*     dat       = (paUserData*) usr_dat;
     const type_sam* r_ptr     = (const type_sam*) in_buf;
@@ -130,7 +130,7 @@ int recd_call_back (const void* in_buf,
 }
 
 TEST(TEST_ORG_PORT_ADIO, HELLO_PA) {
-    aud_t::logic is_not_err = aud_t::no;
+    bool is_not_err = true;
     PaError err;
     try {
         err = Pa_Initialize();
@@ -170,7 +170,7 @@ TEST(TEST_ORG_PORT_ADIO, HELLO_PA) {
                             sam_frq,
                             frm_per_buf,
                             paClipOff,
-                            recd_call_back,
+                            call_back,
                             usr_dat);
         if (err != paNoError) {
             throw "Open stream error";
@@ -194,6 +194,7 @@ TEST(TEST_ORG_PORT_ADIO, HELLO_PA) {
         */
     }
     catch (std::exception& e) {
+        is_not_err = false;
         //std::cout << "Exception: " << e.what() << std::endl;
     }
     try {
@@ -201,10 +202,34 @@ TEST(TEST_ORG_PORT_ADIO, HELLO_PA) {
         if (err != paNoError) {
             throw "Termination Fail";
         }
-        is_not_err = aud_t::yes;
     }
     catch (std::exception& e) {
+        is_not_err = false;
         //std::cout << "Exception: " << e.what() << std::endl;
     }
-    EXPECT_TRUE(is_not_err == aud_t::yes);
+    EXPECT_TRUE(is_not_err == true);
+}
+
+TEST(TEST_PORT_ADIO, HELLO_PA) {
+    bool is_not_err = true;
+    port_adio<type::uint8>* obj = new port_adio<type::uint8>(2, 512, 3, 44100);
+    try {
+        obj->open_port();
+        obj->open_stem();
+        obj->strt_stem();
+        while(obj->is_stem_acti());
+        obj->clos_stem();
+    }
+    catch (std::exception& e) {
+        is_not_err = false;
+        std::cout << "Exception: " << e.what() << std::endl;
+    }
+    try {
+        obj->clos_port();
+    }
+    catch (std::exception& e) {
+        is_not_err = false;
+        std::cout << "Exception: " << e.what() << std::endl;
+    }
+    EXPECT_TRUE(is_not_err == true);
 }
