@@ -3,6 +3,9 @@
 
 #include <armadillo>
 
+#define PORT_ADIO_USING_STD_MEMCPY
+#define arma_abs_std_copy(to, from, len_elem_size) std::memcpy(to.memptr(), from.memptr(), len_elem_size)
+
 namespace type {
     using sint8    = int8_t;
     using sint16   = int16_t;
@@ -32,7 +35,6 @@ namespace type {
     template <typename t>
     using abs_mat  = arma::Mat<t>;
 }
-
 
 namespace cnst {
     const type::bit b_0 = 0b0;
