@@ -29,10 +29,17 @@ namespace type {
     using uint_mat = arma::Mat<uint>;
     using mat      = arma::Mat<val>;
     using cx_mat   = arma::Mat<cx_val>;
+    using bit_cub  = arma::Cube<bit>;
+    using sint_cub = arma::Cube<sint>;
+    using uint_cub = arma::Cube<uint>;
+    using cub      = arma::Cube<val>;
+    using cx_cub   = arma::Cube<cx_val>;
     template <typename t>
     using abs_vec  = arma::Col<t>;
     template <typename t>
     using abs_mat  = arma::Mat<t>;
+    template <typename t>
+    using abs_cub  = arma::Cube<t>;
 }
 
 namespace cnst {
