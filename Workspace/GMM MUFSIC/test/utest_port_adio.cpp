@@ -1,6 +1,9 @@
+#ifdef USING_UNITTEST
+
 #include <gtest/gtest.h>
 #include <port_adio.h>
 #include <type_def.hpp>
+#include <misc.h>
 #include <iostream>
 #include <fstream>
 #include <ctime>
@@ -9,7 +12,9 @@
 TEST(TEST_ORG_PORT_ADIO, INIT_1) {
     PaError err_1;
     PaError err_2;
+    freopen("/dev/null", "w", stderr); // PortAudio log bug
     err_1 = Pa_Initialize();
+    freopen("/dev/tty", "w", stderr); // reopen global console
     if (err_1 == paNoError) {
         err_2 = Pa_Terminate();
         if (err_2 == paNoError) {
@@ -77,7 +82,9 @@ TEST(TEST_ORG_PORT_ADIO, HELLO_PA) {
     PaError     err_onwk;
     PaError     err_clos;
     std::string err_str;
+    freopen("/dev/null", "w", stderr); // PortAudio log bug
     err_open = Pa_Initialize();
+    freopen("/dev/tty", "w", stderr); // reopen global console
     if (err_open == paNoError) {
         try {
             PaStreamParameters in_stem_para;
@@ -295,8 +302,7 @@ TEST(TEST_PORT_ADIO, INIT_3) {
 }
 
 TEST(TEST_PORT_ADIO, INIT_4) {
-    std::stack<clock_t> tic_toc_stak;
-    double              clk_per_sec;
+    cap_tim     cap_tim_obj;
     bool        is_err = false;
     pa_err      err_open;
     pa_err      err_clos;
@@ -318,14 +324,13 @@ TEST(TEST_PORT_ADIO, INIT_4) {
             if (obj->is_err()) {
                 throw get_err_str(obj->get_err());
             }
-            tic_toc_stak.push(clock());
+            cap_tim_obj.tic();
             obj->move_buf_recd();
-            clk_per_sec = ((double)(clock() - tic_toc_stak.top()));
-            tic_toc_stak.pop();
-            obj->save("out/");
             type::mat read = arma::conv_to<type::mat>::from(obj->get_recd());
             read -= obj->get_post_pos_off();
             read /= obj->get_post_pos_amp();
+            cap_tim_obj.toc();
+            obj->save("out/");
             read.save("out/example_port_audio_2.csv", arma::csv_ascii);
             delete obj;
         }
@@ -351,7 +356,9 @@ TEST(TEST_PORT_ADIO, INIT_4) {
         FAIL() << err_str;
     }
     else {
-        std::cout << "[   LOG    ] " << "Around "<< clk_per_sec <<" clocks per second"<< std::endl;
+        std::cout << GLOG() << "Time " << cap_tim_obj.get_tim() << " usec." << std::endl;
         SUCCEED();
     }
 }
+
+#endif

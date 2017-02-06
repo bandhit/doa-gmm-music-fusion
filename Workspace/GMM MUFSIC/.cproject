@@ -37,7 +37,7 @@
 									<listOptionValue builtIn="false" value="ARMA_DONT_PRINT_ERRORS"/>
 									<listOptionValue builtIn="false" value="USING_UNITTEST"/>
 								</option>
-								<option id="gnu.cpp.compiler.option.preprocessor.undef.1347414671" name="Undefined symbols (-U)" superClass="gnu.cpp.compiler.option.preprocessor.undef" useByScannerDiscovery="false"/>
+								<option id="gnu.cpp.compiler.option.preprocessor.undef.1347414671" name="Undefined symbols (-U)" superClass="gnu.cpp.compiler.option.preprocessor.undef" useByScannerDiscovery="false" valueType="undefDefinedSymbols"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1292000375" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.1228317608" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">

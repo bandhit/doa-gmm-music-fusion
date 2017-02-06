@@ -3,7 +3,10 @@
 #include <ctime>
 
 pa_err open_port (void) {
-    return Pa_Initialize();
+    freopen("/dev/null", "w", stderr); // PortAudio log bug
+    pa_err err = Pa_Initialize();
+    freopen("/dev/tty", "w", stderr); // reopen global console
+    return err;
 }
 
 pa_err clos_port (void) {
@@ -123,7 +126,7 @@ void port_adio<t>::cal_sam_fmt (void) {
     }
     else if (std::is_same<t, type::uint8>::value) {
         in_stem_para->sampleFormat = paUInt8;
-        in_stem_para->sampleFormat = (type::val) std::pow(2, 8);
+        in_stem_para->sampleFormat = (type::val) std::pow(2, 7);
         post_pos_off               = 128;
     }
     in_stem_para->sampleFormat |= paNonInterleaved;
@@ -157,7 +160,9 @@ void port_adio<t>::move_buf_recd (void) {
     #ifndef PORT_ADIO_USING_STD_MEMCPY
     recd = buf_recd;
     #else
-    arma_abs_std_copy(recd, buf_recd, (std::size_t) max_frm * in_stem_para->channelCount * elem_size);
+    std::memcpy(recd.memptr(),
+                buf_recd.memptr(),
+                (std::size_t) max_frm * in_stem_para->channelCount * elem_size);
     #endif
 }
 
@@ -208,12 +213,19 @@ int recd_call_back (const void*                     in_buf,
         resu      = paContinue;
     }
     if(in_buf != NULL) {
+        #ifndef PORT_ADIO_USING_STD_MEMCPY
+        obj->buf_recd.rows(obj->idx_frm,
+                           obj->idx_frm + n_cpy_frm - 1) = type::abs_mat<t>(&t_in_buf[0][0],
+                                                                            n_cpy_frm,
+                                                                            obj->in_stem_para->channelCount);
+        #else
         std::size_t n_cpy_frm_elem = (std::size_t) n_cpy_frm * obj->elem_size;
         for (type::uint idx_ch = 0; idx_ch < obj->in_stem_para->channelCount; idx_ch++) {
             std::memcpy(obj->buf_recd.colptr(idx_ch) + obj->idx_frm,
                         &t_in_buf[idx_ch][0],
                         n_cpy_frm_elem);
         }
+        #endif
     }
     else {
         obj->buf_recd.rows(obj->idx_frm, obj->idx_frm + n_cpy_frm - 1).zeros();
@@ -266,7 +278,6 @@ template <typename t>
 type::val port_adio<t>::get_post_pos_off (void) {
     return post_pos_off;
 }
-
 
 template class port_adio<type::val>;
 template class port_adio<type::sint32>;

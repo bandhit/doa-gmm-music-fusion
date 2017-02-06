@@ -3,8 +3,7 @@
 
 #include <armadillo>
 
-#define PORT_ADIO_USING_STD_MEMCPY
-#define arma_abs_std_copy(to, from, len_elem_size) std::memcpy(to.memptr(), from.memptr(), len_elem_size)
+//#define PORT_ADIO_USING_STD_MEMCPY
 
 namespace type {
     using sint8    = int8_t;
