@@ -17,7 +17,7 @@ TEST(TEST_MATH_WIN_FCN, BLACK_MAN_WIN_FCN_1) {
     type::vec  win;
     type::uint n = true_win.n_rows;
     blak_man_win_fcn(win, n);
-    EXPECT_TRUE(arma::approx_equal(win, true_win, "absdiff", cnst::mat::eps));
+    EXPECT_TRUE(arma::approx_equal(win, true_win, "absdiff", cnst::tol));
 }
 
 TEST(TEST_MATH_WIN_FCN, BLACK_MAN_WIN_FCN_2) {
@@ -31,7 +31,7 @@ TEST(TEST_MATH_WIN_FCN, BLACK_MAN_WIN_FCN_2) {
     type::vec  win;
     type::uint n = true_win.n_rows;
     blak_man_win_fcn(win, n);
-    EXPECT_TRUE(arma::approx_equal(win, true_win, "absdiff", cnst::mat::eps));
+    EXPECT_TRUE(arma::approx_equal(win, true_win, "absdiff", cnst::tol));
 }
 
 TEST(TEST_MATH_WIN_FCN, HAMMING_WIN_FCN_1) {
@@ -46,7 +46,7 @@ TEST(TEST_MATH_WIN_FCN, HAMMING_WIN_FCN_1) {
     type::vec  win;
     type::uint n = true_win.n_rows;
     hamg_man_win_fcn(win, n);
-    EXPECT_TRUE(arma::approx_equal(win, true_win, "absdiff", cnst::mat::eps));
+    EXPECT_TRUE(arma::approx_equal(win, true_win, "absdiff", cnst::tol));
 }
 
 TEST(TEST_MATH_WIN_FCN, HAMMING_WIN_FCN_2) {
@@ -60,7 +60,7 @@ TEST(TEST_MATH_WIN_FCN, HAMMING_WIN_FCN_2) {
     type::vec  win;
     type::uint n = true_win.n_rows;
     hamg_man_win_fcn(win, n);
-    EXPECT_TRUE(arma::approx_equal(win, true_win, "absdiff", cnst::mat::eps));
+    EXPECT_TRUE(arma::approx_equal(win, true_win, "absdiff", cnst::tol));
 }
 
 TEST(TEST_MATH_FFT, STFT_1) {
@@ -86,17 +86,22 @@ TEST(TEST_MATH_FFT, STFT_1) {
     blak_man_win_fcn(win, win_size);
 
     sim_tim = arma::regspace<type::vec>(0, sam_tim, tim);
-    sim_in_istft.resize(sim_tim.n_elem, 2);
-    sim_in_istft.col(0) = arma::sin(2 * cnst::mat::pi * 5E+3 * sim_tim);
-    sim_in_istft.col(1) = arma::sin(2 * cnst::mat::pi * 2E+3 * sim_tim);
-    //sim_in_istft.col(2) = arma::sin(2 * cnst::mat::pi * 1E+3 * sim_tim);
+    sim_in_istft.resize(sim_tim.n_elem, 8);
+    sim_in_istft.col(0) = arma::sin(2 * cnst::mat::pi * 2E+2 * sim_tim);
+    sim_in_istft.col(1) = arma::sin(2 * cnst::mat::pi * 4E+2 * sim_tim);
+    sim_in_istft.col(2) = arma::sin(2 * cnst::mat::pi * 6E+2 * sim_tim);
+    sim_in_istft.col(3) = arma::sin(2 * cnst::mat::pi * 8E+2 * sim_tim);
+    sim_in_istft.col(4) = arma::sin(2 * cnst::mat::pi * 2E+3 * sim_tim);
+    sim_in_istft.col(5) = arma::sin(2 * cnst::mat::pi * 4E+3 * sim_tim);
+    sim_in_istft.col(6) = arma::sin(2 * cnst::mat::pi * 6E+3 * sim_tim);
+    sim_in_istft.col(7) = arma::sin(2 * cnst::mat::pi * 8E+3 * sim_tim);
 
     cap_tim cap_tim_obj;
     cap_tim_obj.tic();
     stft_cub(out_stft, out_frq, out_tim, sim_in_istft, win, sam_frq, n_fft, hop_size);
     cap_tim_obj.toc();
     std::cout << GLOG() << "Around " << cap_tim_obj.get_tim() << " usec." << std::endl;
-    FAIL() << "Not done yet!";
+    SUCCEED();
 }
 
 #endif

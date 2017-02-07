@@ -1,6 +1,6 @@
 #ifdef USING_UNITTEST
 
-/*#include <gtest/gtest.h>
+#include <gtest/gtest.h>
 #include <port_adio.h>
 #include <misc.h>
 #include <iostream>
@@ -358,6 +358,6 @@ TEST(TEST_PORT_ADIO, INIT_4) {
         std::cout << GLOG() << "Time " << cap_tim_obj.get_tim() << " usec." << std::endl;
         SUCCEED();
     }
-}*/
+}
 
 #endif

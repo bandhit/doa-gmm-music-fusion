@@ -3,7 +3,10 @@
 
 #include <armadillo>
 
+//#define ALL_USING_DOUBLE_TYPE
 //#define PORT_ADIO_USING_STD_MEMCPY
+#define MATH_USING_FFTW3
+#define FFTW3_USING_THREADS
 
 namespace type {
     using sint8    = int8_t;
@@ -17,7 +20,11 @@ namespace type {
     using bit      = uint8;
     using sint     = sint32;
     using uint     = uint32;
+    #ifndef ALL_USING_DOUBLE_TYPE
     using val      = float;
+    #else
+    using val      = double;
+    #endif
     using cx_val   = std::complex<val>;
     using bit_vec  = arma::Col<bit>;
     using sint_vec = arma::Col<sint>;
@@ -46,12 +53,11 @@ namespace cnst {
     const type::bit b_0 = 0b0;
     const type::bit b_1 = 0b1;
     using mat = arma::Datum<type::val>;
-}
-
-namespace optr {
-    static type::val approx_equal (type::val a, type::val b, type::val eps) {
-        return (std::abs(a - b) < eps);
-    }
+    #ifndef ALL_USING_DOUBLE_TYPE
+    const type::val tol = mat::eps;
+    #else
+    const type::val tol = 10 * mat::eps; // too precision!
+    #endif
 }
 
 #endif
