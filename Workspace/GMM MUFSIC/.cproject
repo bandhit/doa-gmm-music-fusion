@@ -37,7 +37,7 @@
 									<listOptionValue builtIn="false" value="ARMA_DONT_PRINT_ERRORS"/>
 									<listOptionValue builtIn="false" value="USING_UNITTEST"/>
 								</option>
-								<option id="gnu.cpp.compiler.option.preprocessor.undef.1347414671" name="Undefined symbols (-U)" superClass="gnu.cpp.compiler.option.preprocessor.undef" useByScannerDiscovery="false" valueType="undefDefinedSymbols"/>
+								<option id="gnu.cpp.compiler.option.preprocessor.undef.1347414671" name="Undefined symbols (-U)" superClass="gnu.cpp.compiler.option.preprocessor.undef" useByScannerDiscovery="false"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1292000375" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.1228317608" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">
@@ -64,6 +64,9 @@
 									<listOptionValue builtIn="false" value="openblas"/>
 									<listOptionValue builtIn="false" value="gfortran"/>
 									<listOptionValue builtIn="false" value="pthread"/>
+								</option>
+								<option id="gnu.cpp.link.option.userobjs.187989491" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value=""/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1075406052" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>

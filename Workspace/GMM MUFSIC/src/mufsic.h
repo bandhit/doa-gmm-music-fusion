@@ -3,21 +3,26 @@
 
 #include <type_def.hpp>
 
-void blak_man_win_fcn (type::mat& out,
-                       type::uint n);
+void blak_man_win_fcn (type::vec& out,
+                       type::uint n_pnt);
 
-void hamg_man_win_fcn (type::mat& out,
-                       type::uint n);
+void hamg_man_win_fcn (type::vec& out,
+                       type::uint n_pnt);
 
-void stft_cub (type::cx_cub& out,
-               type::mat&    in,
+void stft_cub (type::cx_cub& out_stft,
+               type::vec&    out_frq,
+               type::vec&    out_tim,
+               type::mat&    in_istft,
+               type::vec&    win,
                type::val     sam_frq,
-               void*         win_fcn(type::mat& win,
-                                     type::uint n_win),
-               type::uint    win_size,
-               type::uint    nfft,
+               type::uint    n_fft,
                type::uint    hop_size);
 
-void istft_cub (void);
+/*void istft_cub (type::mat&    out_istft,
+                type::cx_cub& in_stft,
+                type::vec&    win,
+                type::val     sam_frq,
+                type::uint    nfft,
+                type::uint    hop_size);*/
 
 #endif

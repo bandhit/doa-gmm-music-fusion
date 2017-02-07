@@ -38,7 +38,9 @@ port_adio<t>::port_adio (const type::sint new_id,
     in_stem_para->channelCount              = new_n_ch;
     in_stem_para->hostApiSpecificStreamInfo = NULL;
     cal_sam_fmt();
-    cal_lag();
+    if (new_id >= 0) {
+        cal_lag();
+    }
     new_buf_recd();
 
 }
