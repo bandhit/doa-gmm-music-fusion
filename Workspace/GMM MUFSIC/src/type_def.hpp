@@ -6,7 +6,9 @@
 //#define ALL_USING_DOUBLE_TYPE
 //#define PORT_ADIO_USING_STD_MEMCPY
 #define MATH_USING_FFTW3
+#define FFTW3_FLAG FFTW_ESTIMATE // FFTW_MEASURE or FFTW_ESTIMATE
 #define FFTW3_USING_THREADS
+#define FFTW3_NUMBER_OF_THREADS 2
 
 namespace type {
     using sint8    = int8_t;
@@ -20,7 +22,7 @@ namespace type {
     using bit      = uint8;
     using sint     = sint32;
     using uint     = uint32;
-    #ifndef ALL_USING_DOUBLE_TYPE
+    #if not defined(ALL_USING_DOUBLE_TYPE)
     using val      = float;
     #else
     using val      = double;
@@ -53,7 +55,7 @@ namespace cnst {
     const type::bit b_0 = 0b0;
     const type::bit b_1 = 0b1;
     using mat = arma::Datum<type::val>;
-    #ifndef ALL_USING_DOUBLE_TYPE
+    #if not defined(ALL_USING_DOUBLE_TYPE)
     const type::val tol = mat::eps;
     #else
     const type::val tol = 10 * mat::eps; // too precision!
