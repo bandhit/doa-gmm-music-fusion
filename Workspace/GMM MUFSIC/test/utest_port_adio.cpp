@@ -5,8 +5,6 @@
 #include <misc.h>
 #include <iostream>
 #include <fstream>
-#include <ctime>
-#include <stack>
 
 TEST(TEST_ORG_PORT_ADIO, INIT_1) {
     PaError err_1;
@@ -309,7 +307,7 @@ TEST(TEST_PORT_ADIO, INIT_4) {
     err_open = open_port();
     if (err_open == pa_no_err) {
         try {
-            port_adio<type::sint32>* obj = new port_adio<type::sint32>("UA-101: USB Audio", 8, 16, 6, 44100);
+            port_adio<type::sint32>* obj = new port_adio<type::sint32>("UA-101: USB Audio", 8, 16, 3, 44100);
             obj->open_stem();
             if (obj->is_err()) {
                 throw get_err_str(obj->get_err());
