@@ -77,7 +77,7 @@ void blak_man_win_fcn (type::vec& out, const type::uint n_pnt) {
         idx    = n_haft - 2;
     }
     type::vec n = arma::regspace<type::vec>(0, 1, n_haft - 1);
-    out.resize(n_pnt);
+    out.set_size(n_pnt);
     out.rows(0, n_haft - 1) =  0.42
                             - (0.50 * arma::cos((2 * cnst::mat::pi * n) / (n_pnt - 1)))
                             + (0.08 * arma::cos((4 * cnst::mat::pi * n) / (n_pnt - 1)));
@@ -123,7 +123,7 @@ void stft_slice (type::cx_cub&    out,
     type::cx_vec tmp_cx_in(n_fft);
     #endif
 
-    out.resize(n_frq_fft, n_tim_fft, n_sam);
+    out.set_size(n_frq_fft, n_tim_fft, n_sam);
     type::cx_vec tmp_fft(n_fft);
     for (type::uint i_sam = 0, i_tim_fft; i_sam < n_sam; i_sam++) {
         for (i_tim_fft = 0; i_tim_fft < n_tim_fft; i_tim_fft++) {
@@ -189,7 +189,7 @@ void istft_slice (type::mat&          out,
     fftw3::init();
     #endif
 
-    out.resize(n_tim_ifft, n_sam);
+    out.set_size(n_tim_ifft, n_sam);
     out.zeros();
     type::cx_vec tmp_in(n_tmp_in);
     type::cx_vec tmp_ifft(n_tmp_in);
@@ -223,4 +223,14 @@ void istft_slice (type::mat&          out,
 
     out_tim  = arma::regspace<type::vec>(0, 1, n_tim_ifft - 1);
     out_tim /= sam_frq;
+}
+
+void sam_cov_zero_mean (type::mat& out, const type::mat& in) {
+    type::vec avg_in = arma::mean(in, 0).t();
+    out              = arma::cov(in, 1) + (avg_in * avg_in.t());
+}
+
+void sam_cov_zero_mean (type::cx_mat& out, const type::cx_mat& in) {
+    type::cx_vec avg_in = arma::mean(in, 0).st();
+    out                 = arma::cov(in, 1) + arma::conj(avg_in * avg_in.t());
 }

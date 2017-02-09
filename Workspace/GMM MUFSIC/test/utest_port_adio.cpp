@@ -1,4 +1,5 @@
 #ifdef USING_UNITTEST
+//#ifdef DUMMY
 
 #include <gtest/gtest.h>
 #include <port_adio.h>

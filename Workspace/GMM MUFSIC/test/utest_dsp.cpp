@@ -1,4 +1,5 @@
 #ifdef USING_UNITTEST
+//#ifdef DUMMY
 
 #include <gtest/gtest.h>
 #include <dsp.h>
@@ -86,7 +87,7 @@ TEST(TEST_MATH_FFT, STFT_1) {
         blak_man_win_fcn(win, win_size);
 
         sim_tim = arma::regspace<type::vec>(0, sam_tim, tim);
-        sim_in.resize(sim_tim.n_elem, 8);
+        sim_in.set_size(sim_tim.n_elem, 8);
         sim_in.col(0) = arma::sin(2 * cnst::mat::pi * 2E+2 * sim_tim);
         sim_in.col(1) = arma::sin(2 * cnst::mat::pi * 4E+2 * sim_tim);
         sim_in.col(2) = arma::sin(2 * cnst::mat::pi * 6E+2 * sim_tim);
@@ -135,7 +136,7 @@ TEST(TEST_MATH_FFT, STFT_2) {
         blak_man_win_fcn(win, win_size);
 
         sim_tim = arma::regspace<type::vec>(0, sam_tim, tim);
-        sim_in.resize(sim_tim.n_elem, 8);
+        sim_in.set_size(sim_tim.n_elem, 8);
         sim_in.col(0) = arma::sin(2 * cnst::mat::pi * 2E+2 * sim_tim);
         sim_in.col(1) = arma::sin(2 * cnst::mat::pi * 4E+2 * sim_tim);
         sim_in.col(2) = arma::sin(2 * cnst::mat::pi * 6E+2 * sim_tim);
@@ -184,7 +185,7 @@ TEST(TEST_MATH_FFT, STFT_3) {
         blak_man_win_fcn(win, win_size);
 
         sim_tim = arma::regspace<type::vec>(0, sam_tim, tim);
-        sim_in.resize(sim_tim.n_elem, 8);
+        sim_in.set_size(sim_tim.n_elem, 8);
         sim_in.col(0) = arma::sin(2 * cnst::mat::pi * 2E+2 * sim_tim);
         sim_in.col(1) = arma::sin(2 * cnst::mat::pi * 4E+2 * sim_tim);
         sim_in.col(2) = arma::sin(2 * cnst::mat::pi * 6E+2 * sim_tim);
@@ -232,7 +233,7 @@ TEST(TEST_MATH_FFT, STFT_ODD) {
     blak_man_win_fcn(win, win_size);
 
     sim_tim = arma::regspace<type::vec>(0, sam_tim, tim);
-    sim_in.resize(sim_tim.n_elem, 8);
+    sim_in.set_size(sim_tim.n_elem, 8);
     sim_in.col(0) = arma::sin(2 * cnst::mat::pi * 2E+2 * sim_tim);
     sim_in.col(1) = arma::sin(2 * cnst::mat::pi * 4E+2 * sim_tim);
     sim_in.col(2) = arma::sin(2 * cnst::mat::pi * 6E+2 * sim_tim);
@@ -283,7 +284,7 @@ TEST(TEST_MATH_FFT, STFT_EVEN) {
     blak_man_win_fcn(win, win_size);
 
     sim_tim = arma::regspace<type::vec>(0, sam_tim, tim);
-    sim_in.resize(sim_tim.n_elem, 8);
+    sim_in.set_size(sim_tim.n_elem, 8);
     sim_in.col(0) = arma::sin(2 * cnst::mat::pi * 2E+2 * sim_tim);
     sim_in.col(1) = arma::sin(2 * cnst::mat::pi * 4E+2 * sim_tim);
     sim_in.col(2) = arma::sin(2 * cnst::mat::pi * 6E+2 * sim_tim);
@@ -340,7 +341,7 @@ TEST(TEST_MATH_FFT, STFT_ISTFT_ODD) {
     blak_man_win_fcn(win_istft, win_size_istft);
 
     sim_tim = arma::regspace<type::vec>(0, sam_tim, tim);
-    sim_in.resize(sim_tim.n_elem, 8);
+    sim_in.set_size(sim_tim.n_elem, 8);
     sim_in.col(0) = arma::sin(2 * cnst::mat::pi * 2E+2 * sim_tim);
     sim_in.col(1) = arma::sin(2 * cnst::mat::pi * 4E+2 * sim_tim);
     sim_in.col(2) = arma::sin(2 * cnst::mat::pi * 6E+2 * sim_tim);
@@ -399,7 +400,7 @@ TEST(TEST_MATH_FFT, STFT_ISTFT_EVEN) {
     blak_man_win_fcn(win_istft, win_size_istft);
 
     sim_tim = arma::regspace<type::vec>(0, sam_tim, tim);
-    sim_in.resize(sim_tim.n_elem, 8);
+    sim_in.set_size(sim_tim.n_elem, 8);
     sim_in.col(0) = arma::sin(2 * cnst::mat::pi * 2E+2 * sim_tim);
     sim_in.col(1) = arma::sin(2 * cnst::mat::pi * 4E+2 * sim_tim);
     sim_in.col(2) = arma::sin(2 * cnst::mat::pi * 6E+2 * sim_tim);
@@ -427,6 +428,283 @@ TEST(TEST_MATH_FFT, STFT_ISTFT_EVEN) {
     out_frq.reset();
     out_tim_stft.reset();
     SUCCEED();
+}
+
+TEST(TEST_MATH, COV_1) {
+    type::mat  in =
+        {{0.162182308193243, 0.6892145031400080, 0.53834243526005700, 0.8173032206534330},
+         {0.794284540683907, 0.7481515928237100, 0.99613471662688600, 0.8686947053635100},
+         {0.311215042044805, 0.4505415985024980, 0.07817552875318370, 0.0844358455109103},
+         {0.528533135506213, 0.0838213779969326, 0.44267826977544600, 0.3997826490988970},
+         {0.165648729499781, 0.2289769687168190, 0.10665277018058400, 0.2598704028506540},
+         {0.601981941401637, 0.9133373615016700, 0.96189808085505400, 0.8000684802243080},
+         {0.262971284540144, 0.1523780189692230, 0.00463422413406744, 0.4314138274635450},
+         {0.654079098476782, 0.8258169774895470, 0.77491046471150200, 0.9106475944295230}};
+    type::vec  avg_in;
+    type::uint n_sam;
+    type::uint n_var;
+    type::val  tem_i;
+    type::val  tem_j;
+    type::mat  cov_1;
+    type::mat  cov_2;
+    cap_tim    cap_tim_1_obj;
+    cap_tim    cap_tim_2_obj;
+
+
+    cap_tim_1_obj.tic();
+    n_sam  = in.n_rows;
+    n_var  = in.n_cols;
+    avg_in = arma::mean(in, 0).t();
+    cov_1.set_size(n_var, n_var);
+    for (type::uint i = 0, j; i < n_var; i++) {
+        tem_i = arma::as_scalar(avg_in(i));
+        for (j = 0; j < n_var; j++) {
+            tem_j = arma::as_scalar(avg_in(j));
+            cov_1(i, j) = arma::sum((in.col(i) - tem_i) % (in.col(j) - tem_j));
+        }
+    }
+    cov_1 /= n_sam;
+    cap_tim_1_obj.toc();
+
+    cap_tim_2_obj.tic();
+    cov_2 = arma::cov(in, 1);
+    cap_tim_2_obj.toc();
+
+    std::cout << GLOG() << "Native covariance matrix,    around "
+                        << cap_tim_1_obj.get_tim() / 1000.0 << " msec." << std::endl;
+    std::cout << GLOG() << "Armadillo covariance matrix, around "
+                        << cap_tim_2_obj.get_tim() / 1000.0 << " msec." << std::endl;
+
+    EXPECT_TRUE(arma::approx_equal(cov_1, cov_2, "absdiff", cnst::tol));
+}
+
+TEST(TEST_MATH, COV_2) {
+    type::mat re_in =
+        {{0.162182308193243, 0.6892145031400080, 0.53834243526005700, 0.8173032206534330},
+         {0.794284540683907, 0.7481515928237100, 0.99613471662688600, 0.8686947053635100},
+         {0.311215042044805, 0.4505415985024980, 0.07817552875318370, 0.0844358455109103},
+         {0.528533135506213, 0.0838213779969326, 0.44267826977544600, 0.3997826490988970},
+         {0.165648729499781, 0.2289769687168190, 0.10665277018058400, 0.2598704028506540},
+         {0.601981941401637, 0.9133373615016700, 0.96189808085505400, 0.8000684802243080},
+         {0.262971284540144, 0.1523780189692230, 0.00463422413406744, 0.4314138274635450},
+         {0.654079098476782, 0.8258169774895470, 0.77491046471150200, 0.9106475944295230}};
+    type::mat im_in =
+        {{0.181847028302853, 0.8530311177218940, 0.18390778828241700, 0.3377194098213770},
+         {0.263802916521990, 0.6220551314850660, 0.23995252566490300, 0.9000538464176620},
+         {0.145538980384717, 0.3509523808922710, 0.41726706908437000, 0.3692467811202150},
+         {0.136068558708664, 0.5132495398670530, 0.04965443032574210, 0.1112027552937870},
+         {0.869292207640089, 0.4018080337519420, 0.90271610991528100, 0.7802520683211380},
+         {0.579704587365570, 0.0759666916908419, 0.94478718972164600, 0.3897388369612530},
+         {0.549860201836332, 0.2399161535536580, 0.49086409246808000, 0.2416912859138330},
+         {0.144954798223727, 0.1233189348351660, 0.48925263840001900, 0.4039121455881150}};
+    type::cx_mat in(re_in.n_rows, re_in.n_cols);
+    in.set_real(re_in);
+    in.set_imag(im_in);
+    type::cx_vec avg_in;
+    type::uint   n_sam;
+    type::uint   n_var;
+    type::cx_val tem_i;
+    type::cx_val tem_j;
+    type::cx_mat cov_1;
+    type::cx_mat cov_2;
+    cap_tim      cap_tim_1_obj;
+    cap_tim      cap_tim_2_obj;
+
+    cap_tim_1_obj.tic();
+    n_sam  = in.n_rows;
+    n_var  = in.n_cols;
+    avg_in = arma::mean(in, 0).st();
+    cov_1.set_size(n_var, n_var);
+    for (type::uint i = 0, j; i < n_var; i++) {
+        tem_i = arma::as_scalar(avg_in(i));
+        for (j = 0; j < n_var; j++) {
+            tem_j = arma::as_scalar(avg_in(j));
+            cov_1(i, j) = arma::sum((in.col(i) - tem_i) % arma::conj(in.col(j) - tem_j));
+        }
+    }
+    cov_1 = arma::conj(cov_1) / n_sam;
+    cap_tim_1_obj.toc();
+
+    cap_tim_2_obj.tic();
+    cov_2 = arma::cov(in, 1);
+    cap_tim_2_obj.toc();
+
+    std::cout << GLOG() << "Native complex covariance matrix,    around "
+                        << cap_tim_1_obj.get_tim() / 1000.0 << " msec." << std::endl;
+    std::cout << GLOG() << "Armadillo complex covariance matrix, around "
+                        << cap_tim_2_obj.get_tim() / 1000.0 << " msec." << std::endl;
+
+    EXPECT_TRUE(arma::approx_equal(cov_1, cov_2, "absdiff", cnst::tol));
+}
+
+TEST(TEST_MATH, COV_3) {
+    type::mat  in =
+        {{0.162182308193243, 0.6892145031400080, 0.53834243526005700, 0.8173032206534330},
+         {0.794284540683907, 0.7481515928237100, 0.99613471662688600, 0.8686947053635100},
+         {0.311215042044805, 0.4505415985024980, 0.07817552875318370, 0.0844358455109103},
+         {0.528533135506213, 0.0838213779969326, 0.44267826977544600, 0.3997826490988970},
+         {0.165648729499781, 0.2289769687168190, 0.10665277018058400, 0.2598704028506540},
+         {0.601981941401637, 0.9133373615016700, 0.96189808085505400, 0.8000684802243080},
+         {0.262971284540144, 0.1523780189692230, 0.00463422413406744, 0.4314138274635450},
+         {0.654079098476782, 0.8258169774895470, 0.77491046471150200, 0.9106475944295230}};
+    type::vec  avg_in;
+    type::uint n_sam;
+    type::uint n_var;
+    type::mat  cov_1;
+    type::mat  cov_2;
+    cap_tim    cap_tim_1_obj;
+    cap_tim    cap_tim_2_obj;
+
+
+    cap_tim_1_obj.tic();
+    n_sam  = in.n_rows;
+    n_var  = in.n_cols;
+    avg_in = arma::mean(in, 0).t();
+    cov_1.set_size(n_var, n_var);
+    for (type::uint i = 0, j; i < n_var; i++) {
+        for (j = 0; j < n_var; j++) {
+            cov_1(i, j) = arma::sum(in.col(i) % in.col(j));
+        }
+    }
+    cov_1 /= n_sam;
+    cap_tim_1_obj.toc();
+
+    cap_tim_2_obj.tic();
+    sam_cov_zero_mean(cov_2, in);
+    cap_tim_2_obj.toc();
+
+    std::cout << GLOG() << "Native covariance matrix with zero mean,    around "
+                        << cap_tim_1_obj.get_tim() / 1000.0 << " msec." << std::endl;
+    std::cout << GLOG() << "Armadillo covariance matrix with zero mean, around "
+                        << cap_tim_2_obj.get_tim() / 1000.0 << " msec." << std::endl;
+
+    EXPECT_TRUE(arma::approx_equal(cov_1, cov_2, "absdiff", cnst::tol));
+}
+
+TEST(TEST_MATH, COV_4) {
+    type::mat re_in =
+        {{0.162182308193243, 0.6892145031400080, 0.53834243526005700, 0.8173032206534330},
+         {0.794284540683907, 0.7481515928237100, 0.99613471662688600, 0.8686947053635100},
+         {0.311215042044805, 0.4505415985024980, 0.07817552875318370, 0.0844358455109103},
+         {0.528533135506213, 0.0838213779969326, 0.44267826977544600, 0.3997826490988970},
+         {0.165648729499781, 0.2289769687168190, 0.10665277018058400, 0.2598704028506540},
+         {0.601981941401637, 0.9133373615016700, 0.96189808085505400, 0.8000684802243080},
+         {0.262971284540144, 0.1523780189692230, 0.00463422413406744, 0.4314138274635450},
+         {0.654079098476782, 0.8258169774895470, 0.77491046471150200, 0.9106475944295230}};
+    type::mat im_in =
+        {{0.181847028302853, 0.8530311177218940, 0.18390778828241700, 0.3377194098213770},
+         {0.263802916521990, 0.6220551314850660, 0.23995252566490300, 0.9000538464176620},
+         {0.145538980384717, 0.3509523808922710, 0.41726706908437000, 0.3692467811202150},
+         {0.136068558708664, 0.5132495398670530, 0.04965443032574210, 0.1112027552937870},
+         {0.869292207640089, 0.4018080337519420, 0.90271610991528100, 0.7802520683211380},
+         {0.579704587365570, 0.0759666916908419, 0.94478718972164600, 0.3897388369612530},
+         {0.549860201836332, 0.2399161535536580, 0.49086409246808000, 0.2416912859138330},
+         {0.144954798223727, 0.1233189348351660, 0.48925263840001900, 0.4039121455881150}};
+    type::cx_mat in(re_in.n_rows, re_in.n_cols);
+    in.set_real(re_in);
+    in.set_imag(im_in);
+    type::cx_vec avg_in;
+    type::uint   n_sam;
+    type::uint   n_var;
+    type::cx_mat cov_1;
+    type::cx_mat cov_2;
+    cap_tim      cap_tim_1_obj;
+    cap_tim      cap_tim_2_obj;
+
+    cap_tim_1_obj.tic();
+    n_sam  = in.n_rows;
+    n_var  = in.n_cols;
+    avg_in = arma::mean(in, 0).st();
+    cov_1.set_size(n_var, n_var);
+    for (type::uint i = 0, j; i < n_var; i++) {
+        for (j = 0; j < n_var; j++) {
+            cov_1(i, j) = arma::sum(in.col(i) % arma::conj(in.col(j)));
+        }
+    }
+    cov_1 = arma::conj(cov_1) / n_sam;
+    cap_tim_1_obj.toc();
+
+    cap_tim_2_obj.tic();
+    sam_cov_zero_mean(cov_2, in);
+    cap_tim_2_obj.toc();
+
+    std::cout << GLOG() << "Native complex covariance matrix with zero mean,    around "
+                        << cap_tim_1_obj.get_tim() / 1000.0 << " msec." << std::endl;
+    std::cout << GLOG() << "Armadillo complex covariance matrix with zero mean, around "
+                        << cap_tim_2_obj.get_tim() / 1000.0 << " msec." << std::endl;
+
+    EXPECT_TRUE(arma::approx_equal(cov_1, cov_2, "absdiff", cnst::tol));
+}
+
+TEST(TEST_MATH, COV_5) {
+    type::mat  in = arma::randu<type::mat>(44101, 8);
+    type::vec  avg_in;
+    type::uint n_sam;
+    type::uint n_var;
+    type::mat  cov_1;
+    type::mat  cov_2;
+    cap_tim    cap_tim_1_obj;
+    cap_tim    cap_tim_2_obj;
+
+
+    cap_tim_1_obj.tic();
+    n_sam  = in.n_rows;
+    n_var  = in.n_cols;
+    avg_in = arma::mean(in, 0).t();
+    cov_1.set_size(n_var, n_var);
+    for (type::uint i = 0, j; i < n_var; i++) {
+        for (j = 0; j < n_var; j++) {
+            cov_1(i, j) = arma::sum(in.col(i) % in.col(j));
+        }
+    }
+    cov_1 /= n_sam;
+    cap_tim_1_obj.toc();
+
+    cap_tim_2_obj.tic();
+    sam_cov_zero_mean(cov_2, in);
+    cap_tim_2_obj.toc();
+
+    std::cout << GLOG() << "Native covariance matrix with zero mean,    around "
+                        << cap_tim_1_obj.get_tim() / 1000.0 << " msec." << std::endl;
+    std::cout << GLOG() << "Armadillo covariance matrix with zero mean, around "
+                        << cap_tim_2_obj.get_tim() / 1000.0 << " msec." << std::endl;
+
+    EXPECT_TRUE(arma::approx_equal(cov_1, cov_2, "absdiff", cnst::tol));
+}
+
+TEST(TEST_MATH, COV_6) {
+    type::cx_mat in = arma::randu<type::cx_mat>(44101, 8);
+    type::cx_vec avg_in;
+    type::uint   n_sam;
+    type::uint   n_var;
+    type::cx_mat cov_1;
+    type::cx_mat cov_2;
+    cap_tim      cap_tim_1_obj;
+    cap_tim      cap_tim_2_obj;
+
+    cap_tim_1_obj.tic();
+    n_sam  = in.n_rows;
+    n_var  = in.n_cols;
+    avg_in = arma::mean(in, 0).st();
+    cov_1.set_size(n_var, n_var);
+    for (type::uint i = 0, j; i < n_var; i++) {
+        for (j = 0; j < n_var; j++) {
+            cov_1(i, j) = arma::sum(in.col(i) % arma::conj(in.col(j)));
+        }
+    }
+    cov_1 = arma::conj(cov_1) / n_sam;
+    cap_tim_1_obj.toc();
+
+    cap_tim_2_obj.tic();
+    sam_cov_zero_mean(cov_2, in);
+    cap_tim_2_obj.toc();
+
+    std::cout << GLOG() << "Native complex covariance matrix with zero mean,    around "
+                        << cap_tim_1_obj.get_tim() / 1000.0 << " msec." << std::endl;
+    std::cout << GLOG() << "Armadillo complex covariance matrix with zero mean, around "
+                        << cap_tim_2_obj.get_tim() / 1000.0 << " msec." << std::endl;
+
+    EXPECT_TRUE(arma::approx_equal(cov_1, cov_2, "absdiff", cnst::tol));
 }
 
 #endif

@@ -35,4 +35,8 @@ void istft_slice (type::mat&          out,
                   const type::uint    n_fft,
                   const type::uint    hop_size);
 
+void sam_cov_zero_mean (type::mat& out, const type::mat& in);
+
+void sam_cov_zero_mean (type::cx_mat& out, const type::cx_mat& in);
+
 #endif
