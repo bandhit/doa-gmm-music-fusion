@@ -430,7 +430,7 @@ TEST(TEST_MATH_FFT, STFT_ISTFT_EVEN) {
     SUCCEED();
 }
 
-TEST(TEST_MATH, COV_1) {
+TEST(TEST_MATH_COV, COV_1) {
     type::mat  in =
         {{0.162182308193243, 0.6892145031400080, 0.53834243526005700, 0.8173032206534330},
          {0.794284540683907, 0.7481515928237100, 0.99613471662688600, 0.8686947053635100},
@@ -478,7 +478,7 @@ TEST(TEST_MATH, COV_1) {
     EXPECT_TRUE(arma::approx_equal(cov_1, cov_2, "absdiff", cnst::tol));
 }
 
-TEST(TEST_MATH, COV_2) {
+TEST(TEST_MATH_COV, COV_2) {
     type::mat re_in =
         {{0.162182308193243, 0.6892145031400080, 0.53834243526005700, 0.8173032206534330},
          {0.794284540683907, 0.7481515928237100, 0.99613471662688600, 0.8686947053635100},
@@ -537,7 +537,7 @@ TEST(TEST_MATH, COV_2) {
     EXPECT_TRUE(arma::approx_equal(cov_1, cov_2, "absdiff", cnst::tol));
 }
 
-TEST(TEST_MATH, COV_3) {
+TEST(TEST_MATH_COV, COV_3) {
     type::mat  in =
         {{0.162182308193243, 0.6892145031400080, 0.53834243526005700, 0.8173032206534330},
          {0.794284540683907, 0.7481515928237100, 0.99613471662688600, 0.8686947053635100},
@@ -581,7 +581,7 @@ TEST(TEST_MATH, COV_3) {
     EXPECT_TRUE(arma::approx_equal(cov_1, cov_2, "absdiff", cnst::tol));
 }
 
-TEST(TEST_MATH, COV_4) {
+TEST(TEST_MATH_COV, COV_4) {
     type::mat re_in =
         {{0.162182308193243, 0.6892145031400080, 0.53834243526005700, 0.8173032206534330},
          {0.794284540683907, 0.7481515928237100, 0.99613471662688600, 0.8686947053635100},
@@ -636,7 +636,7 @@ TEST(TEST_MATH, COV_4) {
     EXPECT_TRUE(arma::approx_equal(cov_1, cov_2, "absdiff", cnst::tol));
 }
 
-TEST(TEST_MATH, COV_5) {
+TEST(TEST_MATH_COV, COV_5) {
     type::mat  in = arma::randu<type::mat>(44101, 8);
     type::vec  avg_in;
     type::uint n_sam;
@@ -672,7 +672,7 @@ TEST(TEST_MATH, COV_5) {
     EXPECT_TRUE(arma::approx_equal(cov_1, cov_2, "absdiff", cnst::tol));
 }
 
-TEST(TEST_MATH, COV_6) {
+TEST(TEST_MATH_COV, COV_6) {
     type::cx_mat in = arma::randu<type::cx_mat>(44101, 8);
     type::cx_vec avg_in;
     type::uint   n_sam;
