@@ -123,6 +123,7 @@ TEST(TEST_LPS, ROOT_MUSIC_1) {
     type::cx_mat tmp_out_stft;
     type::vec    tmp_phi_rad;
     type::vec    tmp_mag_rot;
+    type::vec    phi_rad;
     cap_tim cap_tim_4_obj;
     cap_tim_4_obj.tic();
     for (type::uint i = 0; i < nfrq; i++) {
@@ -132,14 +133,29 @@ TEST(TEST_LPS, ROOT_MUSIC_1) {
         root_music_min_eig(tmp_phi_rad, tmp_mag_rot, tmp_out_stft, d, c, fun_frq, out_frq(h_frq), min_eig);
         if (!tmp_phi_rad.is_empty()) {
             //std::cout << GLOG() << "Found!" << tmp_phi_rad.t() * (type::val) 180 / cnst::mat::pi;
+            phi_rad = arma::join_cols(phi_rad, tmp_phi_rad);
         }
     }
     cap_tim_4_obj.toc();
+    phi_rad *= (type::val) 180;
+    phi_rad /= cnst::mat::pi;
+    arma::gmm_priv::gmm_diag<type::val> model;
+    cap_tim cap_tim_5_obj;
+    cap_tim_5_obj.tic();
+    bool flag = model.learn(phi_rad.t(), 3, arma::maha_dist, arma::static_subset, 1000, 1000, 1E-6, false);
+    cap_tim_5_obj.toc();
+    if(flag == false) {
+        std::cout << GLOG() << "learning failed." << std::endl;
+    }
+    else {
+        std::cout << GLOG() << "Found!" << model.means;
+    }
 
     std::cout << GLOG() << "Open       around " << cap_tim_1_obj.get_tim() / 1000.0 << " msec." << std::endl;
     std::cout << GLOG() << "STFT       around " << cap_tim_2_obj.get_tim() / 1000.0 << " msec." << std::endl;
     std::cout << GLOG() << "Cut        around " << cap_tim_3_obj.get_tim() / 1000.0 << " msec." << std::endl;
     std::cout << GLOG() << "Root MUSIC around " << cap_tim_4_obj.get_tim() / 1000.0 << " msec." << std::endl;
+    std::cout << GLOG() << "GMM-EM     around " << cap_tim_5_obj.get_tim() / 1000.0 << " msec." << std::endl;
 
     SUCCEED();
 }

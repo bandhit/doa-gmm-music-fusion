@@ -110,7 +110,7 @@ void root_music_min_eig (type::vec&          phi_rad,
         rot                    = rot(skip_idx);
         mag_rot                = mag_rot(skip_idx);
         revs_w_fcn(phi_rad, rot, d, fun_frq, frq, lamb);
-        type::idx_vec fini_idx = find_finite(phi_rad);
+        type::idx_vec fini_idx = arma::find_finite(phi_rad);
         phi_rad                = phi_rad(fini_idx);
         mag_rot                = mag_rot(fini_idx);
     }
