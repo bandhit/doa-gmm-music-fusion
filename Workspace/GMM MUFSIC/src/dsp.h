@@ -39,4 +39,8 @@ void sam_cov_zero_mean (type::mat& out, const type::mat& in);
 
 void sam_cov_zero_mean (type::cx_mat& out, const type::cx_mat& in);
 
+void root (type::cx_vec& out, const type::vec& in);
+
+void root (type::cx_vec& out, const type::cx_vec& in);
+
 #endif

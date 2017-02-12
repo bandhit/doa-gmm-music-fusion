@@ -234,3 +234,24 @@ void sam_cov_zero_mean (type::cx_mat& out, const type::cx_mat& in) {
     type::cx_vec avg_in = arma::mean(in, 0).st();
     out                 = arma::cov(in, 1) + arma::conj(avg_in * avg_in.t());
 }
+
+void root (type::cx_vec& out, const type::vec& in) {
+    type::mat a  = arma::diagmat(arma::ones<type::vec>(in.n_elem - 2), -1);
+    a.row(0)     = in.subvec(1, in.n_elem - 1).t();
+    a.row(0)    /= - in(0);
+    arma::eig_gen(out, a);
+}
+
+void root (type::cx_vec& out, const type::cx_vec& in) {
+    type::cx_vec d = - in.subvec(1, in.n_elem - 1) / in(0);
+    if (arma::approx_equal(arma::imag(d), arma::zeros<type::vec>(in.n_elem - 1), "absdiff", cnst::tol)) {
+        type::mat    a = arma::diagmat(arma::ones<type::vec>(in.n_elem - 2), -1);
+        a.row(0)       = arma::real(d).t();
+        arma::eig_gen(out, a);
+    }
+    else {
+        type::cx_mat a = arma::diagmat(arma::ones<type::cx_vec>(in.n_elem - 2), -1);
+        a.row(0)       = d.st();
+        arma::eig_gen(out, a);
+    }
+}

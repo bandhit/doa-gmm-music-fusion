@@ -707,4 +707,37 @@ TEST(TEST_MATH_COV, COV_6) {
     EXPECT_TRUE(arma::approx_equal(cov_1, cov_2, "absdiff", cnst::tol));
 }
 
+TEST(TEST_MATH_ROOT, ROOT_1) {
+    type::vec    in  = {1, 2, 1};
+    type::cx_vec ans = {type::cx_val(-1, 0), type::cx_val(-1, 0)};
+    type::cx_vec out;
+    root(out, in);
+    EXPECT_TRUE(arma::approx_equal(out, ans, "absdiff", cnst::tol));
+}
+
+TEST(TEST_MATH_ROOT, ROOT_2) {
+    type::vec    in  = {1, 1, 1};
+    type::cx_vec ans = {type::cx_val(-0.5, +0.866025403784439),
+                        type::cx_val(-0.5, -0.866025403784439)};
+    type::cx_vec out;
+    root(out, in);
+    EXPECT_TRUE(arma::approx_equal(out, ans, "absdiff", cnst::tol));
+}
+
+TEST(TEST_MATH_ROOT, ROOT_3) {
+    type::cx_vec in  = {type::cx_val(1, 0),  type::cx_val(2, 0), type::cx_val(1, 0)};
+    type::cx_vec ans = {type::cx_val(-1, 0), type::cx_val(-1, 0)};
+    type::cx_vec out;
+    root(out, in);
+    EXPECT_TRUE(arma::approx_equal(out, ans, "absdiff", cnst::tol));
+}
+
+TEST(TEST_MATH_ROOT, ROOT_4) {
+    type::cx_vec in  = {type::cx_val(1, 1),  type::cx_val(2, 1), type::cx_val(1, 1)};
+    type::cx_vec ans = {type::cx_val(-1, 1), type::cx_val(-0.5, -0.5)};
+    type::cx_vec out;
+    root(out, in);
+    EXPECT_TRUE(arma::approx_equal(out, ans, "absdiff", cnst::tol));
+}
+
 #endif

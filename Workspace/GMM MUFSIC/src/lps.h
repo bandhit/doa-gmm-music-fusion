@@ -19,6 +19,13 @@ void frwd_w_fcn (type::cx_vec&    out,
                  const type::val  frq,
                  const type::val  lamb);
 
+void revs_w_fcn (type::vec&         phi_rad,
+                 const type::cx_vec rot,
+                 const type::val    d,
+                 const type::val    fun_frq,
+                 const type::val    frq,
+                 const type::val    lamb);
+
 void music_min_eig (type::vec&          abs_out,
                     const type::cx_mat& in,
                     const type::vec&    phi_rad,
@@ -27,5 +34,14 @@ void music_min_eig (type::vec&          abs_out,
                     const type::val     fun_frq,
                     const type::val     frq,
                     const type::val     min_eig);
+
+void root_music_min_eig (type::vec&          phi_rad,
+                         type::vec&          mag_rot,
+                         const type::cx_mat& in,
+                         const type::val     d,
+                         const type::val     c,
+                         const type::val     fun_frq,
+                         const type::val     frq,
+                         const type::val     min_eig);
 
 #endif
