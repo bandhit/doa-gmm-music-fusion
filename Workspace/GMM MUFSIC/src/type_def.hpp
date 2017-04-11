@@ -3,7 +3,7 @@
 
 #include <armadillo>
 
-#define ALL_USING_DOUBLE_TYPE
+//#define ALL_USING_DOUBLE_TYPE
 
 //#define PORT_ADIO_USING_STD_MEMCPY
 

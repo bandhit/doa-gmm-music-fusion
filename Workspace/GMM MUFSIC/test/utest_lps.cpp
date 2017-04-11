@@ -12,7 +12,7 @@ TEST(TEST_LPS, MUSIC_1) {
     in.load("test/ex_lps_1.csv", arma::csv_ascii);
     cap_tim_1_obj.toc();
     type::val    sam_frq       = 44.1E+3;
-    type::uint   n_fft         = std::pow(2, (13 + 1));
+    type::uint   n_fft         = std::pow(2, (12 + 1));
     type::uint   win_size_stft = std::floor(100E-3 / (1 / sam_frq));
     type::uint   hop_size      = std::ceil(win_size_stft / std::pow(2, 4));
     type::vec    win_stft;
@@ -87,7 +87,7 @@ TEST(TEST_LPS, ROOT_MUSIC_1) {
     in.load("test/ex_lps_1.csv", arma::csv_ascii);
     cap_tim_1_obj.toc();
     type::val    sam_frq       = 44.1E+3;
-    type::uint   n_fft         = std::pow(2, (13 + 1));
+    type::uint   n_fft         = std::pow(2, (12 + 1));
     type::uint   win_size_stft = std::floor(100E-3 / (1 / sam_frq));
     type::uint   hop_size      = std::ceil(win_size_stft / std::pow(2, 4));
     type::vec    win_stft;
@@ -103,12 +103,12 @@ TEST(TEST_LPS, ROOT_MUSIC_1) {
 
     type::uint t_tim = out_stft.n_cols - 1;
 
-    type::val fun_frq     = 3.4E+3;;
+    type::val fun_frq     = 3.4E+3;
     type::val c           = 340;
     type::val d           = (c / fun_frq) / 2;
     type::val min_eig     = 1E-3;
-    type::val roi_min_frq = fun_frq / 4;
-    type::val roi_max_frq = fun_frq;
+    type::val roi_min_frq = fun_frq / 6.8;
+    type::val roi_max_frq = fun_frq / (3.4 / 3.0);
 
     cap_tim cap_tim_3_obj;
     cap_tim_3_obj.tic();
@@ -142,7 +142,7 @@ TEST(TEST_LPS, ROOT_MUSIC_1) {
     arma::gmm_priv::gmm_diag<type::val> model;
     cap_tim cap_tim_5_obj;
     cap_tim_5_obj.tic();
-    bool flag = model.learn(phi_rad.t(), 3, arma::maha_dist, arma::static_subset, 1000, 1000, 1E-6, false);
+    bool flag = model.learn(phi_rad.t(), 3, arma::maha_dist, arma::static_spread, 1000, 1000, 1E-6, false);
     cap_tim_5_obj.toc();
     if(flag == false) {
         std::cout << GLOG() << "learning failed." << std::endl;

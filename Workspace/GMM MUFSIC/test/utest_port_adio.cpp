@@ -1,5 +1,4 @@
 #ifdef USING_UNITTEST
-//#ifdef DUMMY
 
 #include <gtest/gtest.h>
 #include <port_adio.h>
@@ -256,7 +255,7 @@ TEST(TEST_PORT_ADIO, INIT_3) {
     err_open = open_port();
     if (err_open == pa_no_err) {
         try {
-            port_adio<type::sint32>* obj = new port_adio<type::sint32>("UA-101: USB Audio", 8, 16, 3, 44100);
+            port_adio<type::sint16>* obj = new port_adio<type::sint16>("UA-101: USB Audio", 2, 16, 1, 44100);
             obj->open_stem();
             if (obj->is_err()) {
                 throw get_err_str(obj->get_err());
@@ -308,7 +307,7 @@ TEST(TEST_PORT_ADIO, INIT_4) {
     err_open = open_port();
     if (err_open == pa_no_err) {
         try {
-            port_adio<type::sint32>* obj = new port_adio<type::sint32>("UA-101: USB Audio", 8, 16, 3, 44100);
+            port_adio<type::sint32>* obj = new port_adio<type::sint32>("UA-101: USB Audio", 2, 16, 1, 44100);
             obj->open_stem();
             if (obj->is_err()) {
                 throw get_err_str(obj->get_err());

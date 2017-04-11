@@ -52,7 +52,7 @@ void music_min_eig (type::vec&          out,
     type::vec      re_eig_val = arma::real(eig_val);
     type::uint     n_src      = n_sam - arma::sum(re_eig_val < min_eig);
     type::cx_vec   music_vec(phi_rad.n_elem);
-    if (n_src > 0) {
+    if ((n_src > 0) && (n_src < eig_vec.n_cols)) {
         type::val    lamb = c / fun_frq;
         eig_vec           = eig_vec.cols(arma::sort_index(re_eig_val, "descend"));
         type::cx_mat e    = eig_vec.cols(n_src, n_sam - 1);
@@ -88,7 +88,7 @@ void root_music_min_eig (type::vec&          phi_rad,
     arma::eig_gen(eig_val, eig_vec, cov);
     type::vec      re_eig_val = arma::real(eig_val);
     type::uint     n_src      = n_sam - arma::sum(re_eig_val < min_eig);
-    if (n_src > 0) {
+    if ((n_src > 0) && (n_src < eig_vec.n_cols)) {
         type::val    lamb  = c / fun_frq;
         eig_vec            = eig_vec.cols(arma::sort_index(re_eig_val, "descend"));
         type::cx_mat e     = eig_vec.cols(n_src, n_sam - 1);

@@ -1,5 +1,4 @@
 #ifdef USING_UNITTEST
-//#ifdef DUMMY
 
 #include <gtest/gtest.h>
 #include <dsp.h>
@@ -77,7 +76,7 @@ TEST(TEST_MATH_FFT, STFT_1) {
     type::uint   hop_size;
     type::uint   win_size;
 
-    for (type::uint i = 1; i <= 13; i++) {
+    for (type::uint i = 1; i <= 12; i++) {
         sam_frq  = 16E+3;
         sam_tim  = 1 / sam_frq;
         tim      = 1;
@@ -126,7 +125,7 @@ TEST(TEST_MATH_FFT, STFT_2) {
     type::uint   hop_size;
     type::uint   win_size;
 
-    for (type::uint i = 1; i <= 13; i++) {
+    for (type::uint i = 1; i <= 12; i++) {
         sam_frq  = 44.1E+3;
         sam_tim  = 1 / sam_frq;
         tim      = 1;
@@ -175,7 +174,7 @@ TEST(TEST_MATH_FFT, STFT_3) {
     type::uint   hop_size;
     type::uint   win_size;
 
-    for (type::uint i = 1; i <= 13; i++) {
+    for (type::uint i = 1; i <= 12; i++) {
         sam_frq  = 192E+3;
         sam_tim  = 1 / sam_frq;
         tim      = 1;

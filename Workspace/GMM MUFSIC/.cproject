@@ -31,14 +31,12 @@
 								<option id="gnu.cpp.compiler.option.include.paths.7069353" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/arma}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/fftw}&quot;"/>
-									<listOptionValue builtIn="false" value=""/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/fftw3}&quot;"/>
 									<listOptionValue builtIn="false" value="/usr/local/include"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1845584728" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="ARMA_DONT_USE_WRAPPER"/>
 									<listOptionValue builtIn="false" value="ARMA_DONT_PRINT_ERRORS"/>
-									<listOptionValue builtIn="false" value="USING_UNITTEST"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.undef.1347414671" name="Undefined symbols (-U)" superClass="gnu.cpp.compiler.option.preprocessor.undef" useByScannerDiscovery="false"/>
 								<option id="gnu.cpp.compiler.option.other.other.230583859" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" useByScannerDiscovery="false" value="-c -fmessage-length=0" valueType="string"/>
@@ -73,7 +71,6 @@
 									<listOptionValue builtIn="false" value="fftw3_threads"/>
 									<listOptionValue builtIn="false" value="fftw3f"/>
 									<listOptionValue builtIn="false" value="fftw3"/>
-									<listOptionValue builtIn="false" value="m"/>
 									<listOptionValue builtIn="false" value="portaudio"/>
 								</option>
 								<option id="gnu.cpp.link.option.userobjs.187989491" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">

@@ -166,6 +166,7 @@ void port_adio<t>::move_buf_recd (void) {
                 buf_recd.memptr(),
                 (std::size_t) max_frm * in_stem_para->channelCount * elem_size);
     #endif
+    idx_frm = 0;
 }
 
 template <typename t>
