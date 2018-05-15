@@ -26,6 +26,36 @@ TEST(TEST_ORG_PORT_ADIO, INIT_1) {
     }
 }
 
+TEST(TEST_ORG_PORT_ADIO, INIT_2) {
+    PaError err_1;
+    PaError err_2;
+    freopen("/dev/null", "w", stderr); // PortAudio log bug
+    err_1 = Pa_Initialize();
+    freopen("/dev/tty", "w", stderr); // reopen global console
+    if (err_1 == paNoError) {
+        const PaDeviceInfo *dev_info;
+        int n_dev = Pa_GetDeviceCount();
+        std::cout << GLOG() << "Number of device: " << n_dev << std::endl;
+        for(int i = 0; i < n_dev; i++) {
+            dev_info = Pa_GetDeviceInfo(i);
+            std::cout << GLOG() << "ID: " << i << std::endl;
+            std::cout << GLOG() << " - Device name:        " << dev_info->name << std::endl;
+            std::cout << GLOG() << " - Max Input Channels: " << dev_info->maxInputChannels << std::endl;
+            std::cout << GLOG() << " - Host API:           " << Pa_GetHostApiInfo(dev_info->hostApi)->name << std::endl;
+        }
+        err_2 = Pa_Terminate();
+        if (err_2 == paNoError) {
+            SUCCEED();
+        }
+        else {
+            FAIL() << Pa_GetErrorText(err_2);
+        }
+    }
+    else {
+        FAIL() << Pa_GetErrorText(err_1);
+    }
+}
+
 typedef short int type_sam;
 
 typedef struct {
@@ -307,7 +337,7 @@ TEST(TEST_PORT_ADIO, INIT_4) {
     err_open = open_port();
     if (err_open == pa_no_err) {
         try {
-            port_adio<type::sint32>* obj = new port_adio<type::sint32>("UA-101: USB Audio", 2, 16, 1, 44100);
+            port_adio<type::sint16>* obj = new port_adio<type::sint16>("system", 12, 16, 3, 44100); // "UA-101: USB Audio" or "OCTA-CAPTURE: USB Audio" or "system"
             obj->open_stem();
             if (obj->is_err()) {
                 throw get_err_str(obj->get_err());

@@ -10,8 +10,8 @@
 #define MATH_USING_FFTW3
 
 #define FFTW3_FLAG FFTW_ESTIMATE // FFTW_MEASURE or FFTW_ESTIMATE
-#define FFTW3_USING_THREADS
-#define FFTW3_NUMBER_OF_THREADS 2
+//#define FFTW3_USING_THREADS
+//#define FFTW3_NUMBER_OF_THREADS 2
 
 namespace type {
     using sint8        = int8_t;

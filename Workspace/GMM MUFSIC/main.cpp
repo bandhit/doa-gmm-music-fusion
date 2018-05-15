@@ -14,11 +14,11 @@ int main (void) {
     // common configuration
     type::val   sam_frq       = 44.1E+3;
     // interface configuration
-    std::string ch_str        = "UA-101: USB Audio";
-    type::uint  n_ch          = 2;
+    std::string ch_str        = "OCTA-CAPTURE: USB Audio";
+    type::uint  n_ch          = 3;
     type::uint  frm_per_buf   = 16;
     type::uint  tim_s         = 1;
-    using       adio_type     = type::sint32;
+    using       adio_type     = type::sint16;
     // sfft configuration
     type::uint  n_fft         = std::pow(2, (12 + 1));
     type::uint  win_size_stft = std::floor(100E-3 / (1 / sam_frq));
