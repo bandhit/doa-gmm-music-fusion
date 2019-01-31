@@ -27,6 +27,6 @@ Library flag notes:\
 -lfftw3_threads\
 -lfftw3f\
 -lfftw3\
--lportaudio\
+-lportaudio
 
 Enjoy!
