@@ -16,7 +16,7 @@ Testing and mocking framework: gtest
 Preprocessor notes:\
 -DARMA_DONT_USE_WRAPPER\
 -DARMA_DONT_PRINT_ERRORS\
--DUSING_UNITTEST % for run unittest, otherwise please don't use it\
+-DUSING_UNITTEST % for run unittest, otherwise please don't use it
 
 Library flag notes:\
 -llapack\
