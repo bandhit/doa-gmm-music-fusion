@@ -13,20 +13,20 @@ Audio library: portaudio (pa_stable_v190600_20161030)
 
 Testing and mocking framework: gtest
 
-c++ library flag notes:
--DARMA_DONT_USE_WRAPPER
--DARMA_DONT_PRINT_ERRORS
--DUSING_UNITTEST % for run unittest, otherwise please don't use it
+Preprocessor notes:\
+-DARMA_DONT_USE_WRAPPER\
+-DARMA_DONT_PRINT_ERRORS\
+-DUSING_UNITTEST % for run unittest, otherwise please don't use it\
 
-c++ library flag notes:
--llapack
--lopenblas
--lgfortran
--lpthread
--lfftw3f_threads
--lfftw3_threads
--lfftw3f
--lfftw3
--lportaudio
+Library flag notes:\
+-llapack\
+-lopenblas\
+-lgfortran\
+-lpthread\
+-lfftw3f_threads\
+-lfftw3_threads\
+-lfftw3f\
+-lfftw3\
+-lportaudio\
 
 Enjoy!
